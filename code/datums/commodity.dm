@@ -1474,7 +1474,7 @@
 	comname = "Dead Man's Switch(tm) implant"
 	comtype = /obj/item/implantcase/dead
 	desc = "An implant that will send a radio signal upon death. To set a radio signal, remove the implant from its case"
-	price = 400
+	price = 400 //price is a placeholder
 	baseprice = 400
 	upperfluc = 100
 	lowerfluc = -100
