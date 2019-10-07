@@ -2363,7 +2363,7 @@ datum
 				return
 
 		unstable-ectoplasm
-			name = "Unstable Ectoplasm
+			name = "Unstable Ectoplasm"
 			id = "unstable-ectoplasm"
 			description = "It seems to be shifting in and out of tangibility"
 			reagent_state = LIQUID	
