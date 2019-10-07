@@ -2361,3 +2361,21 @@ datum
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 				..(M)
 				return
+
+		unstable-ectoplasm
+			name = "Unstable Ectoplasm
+			id = "unstable-ectoplasm"
+			description = "It seems to be shifting in and out of tangibility"
+			reagent_state = LIQUID	
+			fluid_r = 148
+			fluid_g = 178
+			fluid_b = 28
+			transparency = 20
+
+
+
+
+
+
+
+
