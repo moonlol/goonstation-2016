@@ -2372,17 +2372,13 @@ datum
 			fluid_b = 28
 			transparency = 20
 			
-			rection_turf(var/turf/T, var/volume)
+			reaction_turf(var/turf/T, var/volume)
 				src = null
-				if(istype(T, /turf/simulated) && T.density)
-					if(&& !isrestrictedz(T.z))
-						if(!T.reagents) T.create_reagents(volume)
-						T.reagents.add_reagent("unstable-ectoplasm", volume, null)
-						T.overlays = null
-						T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
-						T.density = 0
-						spawn(30)
-							T.density = 1
+				if(istype(T, /turf/simulated) && T.density && !isrestrictedz(T.z))
+					T.density = 0
+					spawn(30)
+						T.density = 1
+				return
 						
 
 
