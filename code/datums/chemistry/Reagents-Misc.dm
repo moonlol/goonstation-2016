@@ -2384,7 +2384,7 @@ datum
 				if(volume >= 5)
 					message_admins("passed volume check")
 					if(istype(T, /turf/simulated))
-						message_admins("passed turf check"
+						message_admins("passed turf check")
 						T.density = 0
 						message_admins("it work (start)")
 						spawn(30)
