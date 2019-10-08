@@ -2378,9 +2378,10 @@ datum
 				if(!T.density)
 					return
 				message_admins("passed density")
-				if(isrestrictedz(T.z))
+/*				if(isrestrictedz(T.z))
 					return
-				message_admins("passed z level check")
+				message_admins("passed z level check")*/
+				// add into final patch please thank
 				if(volume >= 5)
 					message_admins("passed volume check")
 					if(istype(T, /turf/simulated))
