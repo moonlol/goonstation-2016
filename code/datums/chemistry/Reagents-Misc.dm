@@ -2373,12 +2373,10 @@ datum
 			transparency = 20
 			
 			reaction_turf(var/turf/T, var/volume)
-				src = null
-				if(istype(T, /turf/simulated) && T.density && !isrestrictedz(T.z))
+				if(istype(T, /turf/simulated) && T.density && !isrestrictedz(T.z) && volume >= 5)
 					T.density = 0
 					spawn(30)
 						T.density = 1
-				return
 						
 
 
