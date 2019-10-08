@@ -2366,23 +2366,27 @@ datum
 			name = "Unstable Ectoplasm"
 			id = "unstable_ectoplasm"
 			description = "It seems to be shifting in and out of tangibility"
-			reagent_state = LIQUID	
+			reagent_state = LIQUID
 			fluid_r = 148
 			fluid_g = 178
 			fluid_b = 28
 			transparency = 20
-			
+
 			reaction_turf(var/turf/T, var/volume)
-				if(istype(T, /turf/simulated) && T.density && !isrestrictedz(T.z) && volume >= 5)
-					T.density = 0
-					spawn(30)
-						T.density = 1
-						
-
-
-
-
-
-
-
-
+				src = null
+				message_admins("pre if worky")
+				if(!T.density)
+					return
+				message_admins("passed density")
+				if(isrestrictedz(T.z))
+					return
+				message_admins("passed z level check")
+				if(volume >= 5)
+					message_admins("passed volume check")
+					if(istype(T, /turf/simulated))
+						message_admins("passed turf check"
+						T.density = 0
+						message_admins("it work (start)")
+						spawn(30)
+							T.density = 1
+						message_admins("it work (end)")
