@@ -2704,4 +2704,14 @@ datum
 			result_amount = 1
 			mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+		
+		unstable_ectoplasm
+			name = "Unstable Ectoplasm"
+			id = "unstable_ectoplasm"
+			result = "unstable_ectoplasm"
+			required_reagents = list("ectoplasm" = 10, "strange_reagent" = 2, "stabiliser" = 10)
+			required_temperature = T0C - 33
+			result_amount = 5
+			mix_phrase = "The ectoplasm seems to start shifting states!"
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 #undef get_fucked_clarks
