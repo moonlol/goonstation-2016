@@ -2374,20 +2374,20 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				message_admins("pre if worky")
 				if(!T.density)
 					return
-				message_admins("passed density")
 /*				if(isrestrictedz(T.z))
-					return
-				message_admins("passed z level check")*/
+					return*/
 				// add into final patch please thank
 				if(volume >= 5)
-					message_admins("passed volume check")
 					if(istype(T, /turf/simulated))
-						message_admins("passed turf check")
 						T.density = 0
-						message_admins("it work (start)")
+						T.pathable = 1
+						T.blocks_air = 0
 						spawn(30)
 							T.density = 1
-						message_admins("it work (end)")
+							T.pathable = 0
+							T.blocks_air = 1
+
+
+
