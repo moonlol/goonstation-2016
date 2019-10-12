@@ -2710,7 +2710,7 @@ datum
 			id = "unstable_ectoplasm"
 			result = "unstable_ectoplasm"
 			required_reagents = list("ectoplasm" = 10, "strange_reagent" = 2, "stabiliser" = 10)
-			required_temperature = T0C - 33
+			required_temperature = 33 - T0C
 			result_amount = 5
 			mix_phrase = "The ectoplasm seems to start shifting states!"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
