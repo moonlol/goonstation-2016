@@ -2714,4 +2714,19 @@ datum
 			result_amount = 5
 			mix_phrase = "The ectoplasm seems to start shifting states!"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		ectoplasm_pulse
+			name = "ectoplasm pulse"
+			id = "ectoplasm_pulse"
+			required_reagents = list("ectoplasm" = 10, "strange_reagent" = 2)
+			required_temperature = 33 - T0C
+			instant = 1
+			inhibitors = list("stabiliser")
+			mix_phrase = ("The ectoplasm seems to be shif- oh god oh fuck")
+			mix_sound = 'sound/effects/elec_bigzap.ogg'
+			on_reaction(var/datum/reagents/holder, var/created_volume
+				var/mob/living/target = urs
+				for (var/turf/T in view(5, get_turf(my_atom)))
+					animate_flash_color_fill(T,"#00FF00",1,5)
+
 #undef get_fucked_clarks
