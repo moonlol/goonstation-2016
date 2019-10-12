@@ -2724,7 +2724,7 @@ datum
 			inhibitors = list("stabiliser")
 			mix_phrase = ("The ectoplasm seems to be shif- oh god oh fuck")
 			mix_sound = 'sound/effects/elec_bigzap.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume
+			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/mob/living/target = usr
 				for (var/turf/T in view(5, get_turf(my_atom)))
 					animate_flash_color_fill(T,"#00FF00",1,5)
