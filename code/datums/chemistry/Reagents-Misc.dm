@@ -2382,6 +2382,7 @@ datum
 				var/old_opacity = T.opacity
 				if(volume >= 5)
 					if(istype(T, /turf/simulated))
+						var/obj/decal/cleanable/greenglow/G = new(T)
 						T.opacity = 0
 						T.density = 0
 						T.pathable = 1
@@ -2391,4 +2392,6 @@ datum
 							T.density = 1
 							T.pathable = 0
 							T.blocks_air = 1
+							qdel(G)
+
 
