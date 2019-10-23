@@ -2726,15 +2726,16 @@ datum
 			mix_sound = 'sound/effects/elec_bigzap.ogg'
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/mob/living/target = usr
+				var/atom/my_atom = holder.my_atom
 				for (var/turf/T in view(5, get_turf(my_atom)))
 					animate_flash_color_fill(T,"#00FF00",1,5)
-				for(var/mob/living/carbon/M in view(5, get_turf(my_atom)))
-					rads_amt = rand(30,40)
+				for(var/mob/living/carbon/human/M in view(5, get_turf(my_atom)))
+					var/rads_amt = rand(30,40)
 					M.irradiate(rads_amt)
-					if (prob(25) && M.bioholder)
+					if (prob(25) && M.bioHolder)
 						if (prob(75))
-							M.bioholder.RandomEffect("bad")
+							M.bioHolder.RandomEffect("bad")
 						else
-							M.bioholder.RandomEffect("good")
+							M.bioHolder.RandomEffect("good")
 
 #undef get_fucked_clarks
