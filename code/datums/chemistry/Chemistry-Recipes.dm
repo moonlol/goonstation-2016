@@ -2728,5 +2728,13 @@ datum
 				var/mob/living/target = usr
 				for (var/turf/T in view(5, get_turf(my_atom)))
 					animate_flash_color_fill(T,"#00FF00",1,5)
+				for(var/mob/living/carbon/M in view(5, get_turf(my_atom)))
+					rads_amt = rand(30,40)
+					M.irradiate(rads_amt)
+					if (prob(25) && M.bioholder)
+						if (prob(75))
+							M.bioholder.RandomEffect("bad")
+						else
+							M.bioholder.RandomEffect("good")
 
 #undef get_fucked_clarks
