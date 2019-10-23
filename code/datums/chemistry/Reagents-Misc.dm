@@ -2379,15 +2379,16 @@ datum
 /*				if(isrestrictedz(T.z))
 					return*/
 				// add into final patch please thank
+				var/old_opacity = T.opacity
 				if(volume >= 5)
 					if(istype(T, /turf/simulated))
+						T.opacity = 0
 						T.density = 0
 						T.pathable = 1
 						T.blocks_air = 0
 						spawn(30)
+							T.opacity = old_opacity
 							T.density = 1
 							T.pathable = 0
 							T.blocks_air = 1
-
-
 
