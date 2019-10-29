@@ -2063,14 +2063,11 @@
 				if(src.wear_suit && src.wear_suit.icon_state == "vclothes" && !src.stat)
 					
 					message = "<B>[src]</b> poses menacingly"
-					return
 				else
 					if(prob(50))
 						message = "<B>[src]</b> attempts to pose but fails miserably"
-						return
 					else
 						src.show_text("you just dont feel menacingly enough!" , "red")
-						return
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
