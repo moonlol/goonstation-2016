@@ -2064,9 +2064,8 @@
 					
 					message = "<B>[src]</b> poses menacingly"
 				else
-					if(prob(50))
-						message = "<B>[src]</b> attempts to pose but fails miserably"
-						src.show_text("you just don't feel menacing enough!" , "red")
+					message = "<B>[src]</b> attempts to pose but fails miserably"
+					src.show_text("you just don't feel menacing enough!" , "red")
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
