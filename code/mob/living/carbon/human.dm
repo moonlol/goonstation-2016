@@ -2064,7 +2064,7 @@
 					
 					message = "<B>[src]</b> poses menacingly"
 					src.overlays = null
-					src.overlays = image('icons/effects/effect.dmi',icon_state = "menacing")
+					src.overlays = image('icons/effects/effects.dmi',icon_state = "menacing")
 				else
 					message = "<B>[src]</b> attempts to pose but fails miserably"
 					src.show_text("you just don't feel menacing enough!" , "red")
