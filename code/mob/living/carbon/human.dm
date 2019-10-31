@@ -2063,7 +2063,8 @@
 				if(src.wear_suit && src.wear_suit.icon_state == "vclothes" && !src.stat)
 					
 					message = "<B>[src]</b> poses menacingly"
-					animate_menacing(src)
+					src.overlays = null
+					src.overlays = image('icons/effects/effect.dmi',icon_state = "menacing")
 				else
 					message = "<B>[src]</b> attempts to pose but fails miserably"
 					src.show_text("you just don't feel menacing enough!" , "red")
@@ -2084,13 +2085,6 @@
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
 				O.show_message(message, m_type)
-/obj/effect/menacing
-	name = "menacing"
-	icon = 'icons/mob/64.dmi'
-	icon_state = "menacing"
-	anchored = 1.0
-	pixel_x = -16
-	pixel_y = -16
 
 /mob/living/carbon/human/get_desc()
 
