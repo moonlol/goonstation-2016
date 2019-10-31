@@ -265,17 +265,6 @@
 	spawn(30) qdel(S)
 	return
 
-/proc/animate_menacing(var/atom/A)
-	if (!istype(A))
-		return
-	var/obj/effect/menacing/S = new(A.loc)
-	S.Scale(0.05, 0.05)
-	S.alpha = 0
-	animate(S,transform = matrix(0.5, MATRIX_SCALE), time = 20, alpha = 255, pixel_y = 27, easing = ELASTIC_EASING)
-	animate(time = 5, alpha = 0, pixel_y = -16, easing = CIRCULAR_EASING)
-	spawn(30) qdel(S)
-	return
-
 /proc/animate_horizontal_wiggle(var/atom/A, var/loopnum = 5, speed = 10, X1 = 3, X2 = -3, var/slightly_random = 1)
 	if (!istype(A))
 		return
