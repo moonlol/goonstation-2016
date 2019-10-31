@@ -137,7 +137,7 @@
 
 	var/list/random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
-
+	var/posing = 0
 /mob/living/carbon/human/New()
 	. = ..()
 
@@ -2061,10 +2061,12 @@
 			
 			if("pose")
 				if(src.wear_suit && src.wear_suit.icon_state == "vclothes" && !src.stat)
-					
-					message = "<B>[src]</b> poses menacingly"
-					src.overlays = null
-					src.overlays = image('icons/effects/effects.dmi',icon_state = "menacing")
+					if(posing == 1)
+						src.show_text("You can't pose while already posing!!" , "red")
+					else	
+						message = "<B>[src]</b> poses menacingly"
+						src.UpdateOverlays(image('icons/effects/effects.dmi' , icon_state = "menacing"), "menacing_aura")
+						posing = 1
 				else
 					message = "<B>[src]</b> attempts to pose but fails miserably"
 					src.show_text("you just don't feel menacing enough!" , "red")
@@ -2733,6 +2735,10 @@
 	if (src.buckled && src.buckled.anchored)
 		return
 
+	if (src.posing == 1)
+		src.UpdateOverlays(null , "menacing_aura")
+		src.posing = 0
+	
 	if (src.traitHolder && prob(5) && src.traitHolder.hasTrait("leftfeet") && !src.handcuffed)
 		spawn(10)
 			if(src)
