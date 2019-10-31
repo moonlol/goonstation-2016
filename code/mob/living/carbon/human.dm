@@ -2063,10 +2063,16 @@
 				if(src.wear_suit && src.wear_suit.icon_state == "vclothes" && !src.stat)
 					if(posing == 1)
 						src.show_text("You can't pose while already posing!!" , "red")
-					else	
-						message = "<B>[src]</b> poses menacingly"
-						src.UpdateOverlays(image('icons/effects/effects.dmi' , icon_state = "menacing"), "menacing_aura")
-						posing = 1
+					else
+						if(isvampire(src))
+							message = "<B>[src]</b> poses menacingly as though they have rejected their humanity!"
+							src.say("I have rejected my humanity!")
+							src.UpdateOverlays(image('icons/effects/effects.dmi' , icon_state = "menacing"), "menacing_aura")
+							posing = 1
+						else
+							message = "<B>[src]</b> poses menacingly."
+							src.UpdateOverlays(image('icons/effects/effects.dmi' , icon_state = "menacing"), "menacing_aura")
+							posing = 1
 				else
 					message = "<B>[src]</b> attempts to pose but fails miserably"
 					src.show_text("you just don't feel menacing enough!" , "red")
