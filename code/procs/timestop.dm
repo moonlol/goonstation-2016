@@ -1,0 +1,2 @@
+/proc/timestop()
+  //ditto
