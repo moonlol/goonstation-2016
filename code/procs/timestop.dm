@@ -9,6 +9,7 @@
 	var/list/immune = list()
 	var/duration = 50
 	var/freezerange = 5
+	var/turf/target
 
 /obj/effect/timefield/proc/timestop()
 	target = get_turf(src)

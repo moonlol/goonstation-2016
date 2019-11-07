@@ -1,9 +1,12 @@
 // BEGIN_INTERNALS
 /*
+MAP_ZOOM: 1.000
 LAST_COMPILE_TIME: 1457219709
-DIR: code code\chui\example code\datums\buildmodes code\datums\buildmodes\adventure code\datums\buildmodes\adventure\elements code\datums\chemistry code\datums\chemistry\tools code\datums\critter_mobs\health code\datums\gamemodes code\datums\genetics 
+DIR: code code\chui\example code\datums\buildmodes code\datums\buildmodes\adventure code\datums\buildmodes\adventure\elements code\datums\chemistry code\datums\chemistry\tools code\datums\critter_mobs\health code\datums\gamemodes code\datums\genetics code\procs maps maps\config 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 510.1327
+WINDOW: code\procs\timestop.dm;maps\config\standard.dm
+FILE: maps\config\standard.dm
 */
 // END_INTERNALS
