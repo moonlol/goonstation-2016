@@ -1090,6 +1090,8 @@ var/zapLimiter = 0
 
 	if(stat & BROKEN)
 		return
+	if(!area)
+		return
 	if(!area.requires_power)
 		return
 
