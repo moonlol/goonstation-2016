@@ -393,6 +393,7 @@ obj
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/throwforce = 1
+	var/throwing_paused = FALSE
 	var/soundproofing = 5
 
 /atom/movable/overlay

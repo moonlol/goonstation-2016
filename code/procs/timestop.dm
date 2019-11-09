@@ -73,13 +73,11 @@ proc/timestop(setimmune, setduration, setsize)
 	frozen_things -= A
 
 /obj/effect/timefield/proc/freeze_throwing(atom/movable/AM)
-//	var/datum/thrownthing/T = AM,throwing
-//	T.paused = TRUE
+	AM.throwing_paused = TRUE
 
 /obj/effect/timefield/proc/unfreeze_throwing(atom/movable/AM)
-//	var/datum/thrownthing/T = AM.throwing
-//	if(T)
-//		T.paused = FALSE
+	if(AM)
+		AM.throwing_paused = FALSE
 
 /obj/effect/timefield/proc/freeze_turf(turf/T)
 	reversecolourin(T)
@@ -90,10 +88,10 @@ proc/timestop(setimmune, setduration, setsize)
 
 
 /obj/effect/timefield/proc/freeze_projectile(obj/projectile/P)
-//	P.paused = TRUE
+	P.projectile_paused = TRUE
 
 /obj/effect/timefield/proc/unfreeze_projectile(obj/projectile/P)
-//	P.paused = FALSE
+	P.projectile_paused = FALSE
 
 /obj/effect/timefield/proc/freeze_mob(mob/living/L)
 //	dunno

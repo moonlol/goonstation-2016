@@ -64,6 +64,8 @@
 	var/wx = 0
 	var/wy = 0
 
+	var/projectile_paused = FALSE // for time stopping
+
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
 		var/oldyo = yo
@@ -84,6 +86,8 @@
 			src.setup()
 
 		while (!disposed)
+			while(src.projectile_paused)
+				sleep(10)
 			do_step()
 			sleep(1)
 
