@@ -20,21 +20,18 @@
 		src.immune += immune // see below
 		src.duration = duration // see below
 		src.size = size //byond be like
-		message_admins("object has been spawned")
-		world.log << "object spawned"
 		for (var/turf/simulated/S in range(size, src))
 			freeze_turf(S)
 		for (var/atom/X in range(size, src))
 			freeze_atom(X)
 		spawn(duration)
-			message_admins("unfreezing occurred")
 			unfreeze_all()
 			src.immune -= immune
+
+
 proc/timestop(setimmune, setduration, setsize)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize)
-	message_admins("it spawn")
 	spawn(setduration)
-		message_admins("delete")
 		qdel(newtimefield)
 
 
@@ -49,7 +46,7 @@ proc/timestop(setimmune, setduration, setsize)
 	else if(istype(A, /obj/critter))
 		freeze_critter(A)
 	else if(istype(A, /obj/machinery))
-		freeze_machinery(A)
+		frozen = TRUE
 	else
 		frozen = FALSE
 	if(A.throwing == 1)
@@ -57,10 +54,9 @@ proc/timestop(setimmune, setduration, setsize)
 		frozen = TRUE
 	if(!frozen)
 		return
-
 	old_colors[A] = A.color
-	frozen_things[A] = A.anchored
-	A.anchored = FALSE
+	frozen_things["\ref[A]"]= A.anchored
+	A.anchored = 1
 	reversecolourin(A)
 	frozen_things += A
 	return
@@ -82,10 +78,8 @@ proc/timestop(setimmune, setduration, setsize)
 		unfreeze_projectile(A)
 	else if(istype(A, /obj/critter))
 		unfreeze_critter(A)
-	else if(istype(A, /obj/machinery))
-		unfreeze_machinery(A)
 	reversecolourout(A)
-	A.anchored = frozen_things[A]
+	A.anchored = frozen_things["\ref[A]"]
 	frozen_things -= A
 
 /obj/effect/timefield/proc/freeze_throwing(atom/movable/AM)
@@ -124,11 +118,6 @@ proc/timestop(setimmune, setduration, setsize)
 /obj/effect/timefield/proc/unfreeze_critter(obj/critter/C)
 	C.paused = 0
 
-/obj/effect/timefield/proc/freeze_machinery(obj/machinery/M)
-
-/obj/effect/timefield/proc/unfreeze_machinery(obj/machinery/M)
-
-
 /obj/effect/timefield/proc/reversecolourin(atom/A)
 	A.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
 
@@ -143,3 +132,30 @@ add onprox thing
 add various freezing and unfreezing effects for mobs/atoms/turfs/projectiles/thrown objects
 add the field to freeze upon being created
 */
+
+/obj/testthing1
+	bound_width = 32
+	bound_height = 32
+	icon = 'icons/turf/shuttle_blu.dmi'
+	icon_state = "wall3"
+	anchored = 1
+	density = 1
+	opacity = 0
+/obj/testthing2
+	bound_width = 64
+	bound_height = 64
+	icon = 'icons/turf/shuttle_blu.dmi'
+	icon_state = "wall3"
+	anchored = 1
+	density = 1
+	opacity = 0
+/obj/testthing3
+	bound_width = 96
+	bound_height = 96
+	icon = 'icons/turf/shuttle_blu.dmi'
+	icon_state = "wall3"
+	anchored = 1
+	density = 0
+	opacity = 0
+	Crossed(atom/moveable/O)
+		message_admins("crossed it")
