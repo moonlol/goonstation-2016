@@ -138,6 +138,7 @@
 	var/list/random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 
+
 /mob/living/carbon/human/New()
 	. = ..()
 
@@ -2621,6 +2622,9 @@
 	if (usr.stat)
 		return
 
+	if (paused)
+		return
+
 	var/atom/movable/item = src.equipped()
 
 	if (istype(item, /obj/item) && item:cant_self_remove)
@@ -2948,6 +2952,8 @@
 	if (istype(src.wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
+		return 1
+	if (paused)
 		return 1
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
 		return 1*/
