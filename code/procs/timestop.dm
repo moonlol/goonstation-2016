@@ -33,7 +33,7 @@
 proc/timestop(setimmune, setduration, setsize)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize)
 	message_admins("it spawn")
-	spawn(setduration - 1)
+	spawn(setduration)
 		message_admins("delete")
 		qdel(newtimefield)
 
@@ -60,7 +60,7 @@ proc/timestop(setimmune, setduration, setsize)
 
 	old_colors[A] = A.color
 	frozen_things[A] = A.anchored
-	A.anchored = 1
+	A.anchored = FALSE
 	reversecolourin(A)
 	frozen_things += A
 	return
