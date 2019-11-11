@@ -12,9 +12,9 @@
 	var/size
 	layer = LATTICE_LAYER
 	var/list/frozen_things = list()
-	var/list/frozen_mobs = list()
 	var/list/frozen_turfs = list()
 	var/list/old_colors = list()
+	var/list/smoltimefields = list()
 	New(loc, immune, duration, size)
 		..(loc)
 		src.immune += immune // see below
@@ -24,10 +24,31 @@
 			freeze_turf(S)
 		for (var/atom/X in range(size, src))
 			freeze_atom(X)
+		for (var/turf/simulated/S in range(size, src))
+			message_admins("it spawned")
+			var/obj/effect/timefield/small/newsmalltimefield = new(S)
+			smoltimefields += newsmalltimefield
 		spawn(duration)
 			unfreeze_all()
 			src.immune -= immune
+			for(var/t in smoltimefields)
+				message_admins("it got delet")
+				qdel(t)
+				smoltimefields -= t
 
+
+/obj/effect/timefield/small
+	name = "smol timefield"
+	desc = "you shouldnt be able to read this"
+	density = 0
+	anchored = 1
+	opacity = 0
+	alpha = 255
+
+	Crossed(atom/movable/A)
+		..(A)
+		message_admins("it got cross")
+		freeze_atom(A)
 
 proc/timestop(setimmune, setduration, setsize)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize)
@@ -49,12 +70,13 @@ proc/timestop(setimmune, setduration, setsize)
 		frozen = TRUE
 	else
 		frozen = FALSE
-	if(A.throwing == 1)
-		freeze_throwing(A)
-		frozen = TRUE
+	if(istype(A, /obj))
+		if(A.throwing == 1)
+			freeze_throwing(A)
+			frozen = TRUE
 	if(!frozen)
 		return
-	old_colors[A] = A.color
+	old_colors["\ref[A]"] = A.color
 	frozen_things["\ref[A]"]= A.anchored
 	A.anchored = 1
 	reversecolourin(A)
@@ -122,7 +144,7 @@ proc/timestop(setimmune, setduration, setsize)
 	A.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
 
 /obj/effect/timefield/proc/reversecolourout(atom/A)
-	A.color = old_colors[A]
+	A.color = old_colors["\ref[A]"]
 
 
 

@@ -1,12 +1,11 @@
 // BEGIN_INTERNALS
 /*
 MAP_ZOOM: 1.000
-LAST_COMPILE_TIME: 1573423676
-DIR: code code\obj code\procs 
+LAST_COMPILE_TIME: 1573497602
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 512.1472
 WINDOW: code\procs\timestop.dm;code\mob\living.dm;code\obj\critter\critter_parent.dm;code\obj\item\toilets.dm;code\mob\living\carbon\human.dm;code\obj\machinery.dm
-FILE: code\obj\machinery.dm
+FILE: code\procs\timestop.dm
 */
 // END_INTERNALS
