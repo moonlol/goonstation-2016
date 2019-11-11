@@ -93,8 +93,9 @@ proc/timestop(setimmune, setduration, setsize)
 
 
 /obj/effect/timefield/proc/unfreeze_atom(atom/movable/A)
-	if(A.throwing == 1)
-		unfreeze_throwing(A)
+	if (istype(A, /obj))
+		if(A.throwing == 1)
+			unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
 	else if(istype(A, /obj/projectile))
