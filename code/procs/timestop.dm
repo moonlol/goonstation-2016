@@ -25,30 +25,31 @@
 		for (var/atom/X in range(size, src))
 			freeze_atom(X)
 		for (var/turf/simulated/S in range(size, src))
-			message_admins("it spawned")
-			var/obj/effect/timefield/small/newsmalltimefield = new(S)
+			var/obj/effect/timefieldsmall/newsmalltimefield = new(S, src)
 			smoltimefields += newsmalltimefield
 		spawn(duration)
 			unfreeze_all()
 			src.immune -= immune
 			for(var/t in smoltimefields)
-				message_admins("it got delet")
 				qdel(t)
 				smoltimefields -= t
 
 
-/obj/effect/timefield/small
+/obj/effect/timefieldsmall
 	name = "smol timefield"
 	desc = "you shouldnt be able to read this"
 	density = 0
 	anchored = 1
 	opacity = 0
 	alpha = 255
+	var/obj/effect/timefield/masterfield
 
-	Crossed(atom/movable/A)
-		..(A)
-		message_admins("it got cross")
-		freeze_atom(A)
+	New(var/loc, var/obj/effect/timefield/masterfield)
+		..(loc)
+		src.masterfield = masterfield
+	Crossed(var/atom/crosser as mob|obj)
+		..(crosser)
+		masterfield.freeze_atom(crosser)
 
 proc/timestop(setimmune, setduration, setsize)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize)
@@ -145,39 +146,3 @@ proc/timestop(setimmune, setduration, setsize)
 
 /obj/effect/timefield/proc/reversecolourout(atom/A)
 	A.color = old_colors["\ref[A]"]
-
-
-
-/*
-todo:
-add onprox thing
-add various freezing and unfreezing effects for mobs/atoms/turfs/projectiles/thrown objects
-add the field to freeze upon being created
-*/
-
-/obj/testthing1
-	bound_width = 32
-	bound_height = 32
-	icon = 'icons/turf/shuttle_blu.dmi'
-	icon_state = "wall3"
-	anchored = 1
-	density = 1
-	opacity = 0
-/obj/testthing2
-	bound_width = 64
-	bound_height = 64
-	icon = 'icons/turf/shuttle_blu.dmi'
-	icon_state = "wall3"
-	anchored = 1
-	density = 1
-	opacity = 0
-/obj/testthing3
-	bound_width = 96
-	bound_height = 96
-	icon = 'icons/turf/shuttle_blu.dmi'
-	icon_state = "wall3"
-	anchored = 1
-	density = 0
-	opacity = 0
-	Crossed(atom/moveable/O)
-		message_admins("crossed it")
