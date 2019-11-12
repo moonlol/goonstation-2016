@@ -147,3 +147,8 @@ proc/timestop(setimmune, setduration, setsize)
 
 /obj/effect/timefield/proc/reversecolourout(atom/A)
 	A.color = old_colors["\ref[A]"]
+
+
+/*
+could've done a unsubscription from loops but no point as the effect is meant to be short
+*/
