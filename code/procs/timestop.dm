@@ -83,11 +83,16 @@ proc/timestop(setimmune, setduration, setsize)
 		frozen = FALSE
 	if(!frozen)
 		return
-	old_colors["\ref[A]"] = A.color
 	old_anchored["\ref[A]"] = A.anchored
 	A.anchored = 1
-	reversecolourin(A)
-	frozen_things += A
+	if(!(A in decofrozen))
+		old_colors["\ref[A]"] = A.color
+		reversecolourin(A)
+		message_admins("[A] passed the thing")
+		frozen_things += A
+	else
+		message_admins("[A] failed the thing")
+		frozen_things += A
 	return
 
 
@@ -120,10 +125,17 @@ proc/timestop(setimmune, setduration, setsize)
 */
 /obj/effect/timefield/proc/freeze_throwing(atom/movable/AM)
 	AM.throwing_paused = TRUE
+	var/matrix/transform_original = AM.transform
+	animate(AM, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = 1)
+	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = 1)
+	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = 1)
 
 /obj/effect/timefield/proc/unfreeze_throwing(atom/movable/AM)
-	if(AM)
-		AM.throwing_paused = FALSE
+	AM.throwing_paused = FALSE
+	var/matrix/transform_original = AM.transform
+	animate(AM, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
+	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
+	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 
 /obj/effect/timefield/proc/freeze_turf(turf/T)
 	reversecolourin(T)

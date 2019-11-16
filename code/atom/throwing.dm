@@ -153,11 +153,7 @@
 	//Gotta do this in 4 steps or byond decides that the best way to interpolate between (0 and) 180 and 360 is to just flip the icon over, not turn it.
 	if(!istype(src)) return
 
-
 	var/matrix/transform_original = src.transform
-	while(src.throwing_paused)
-		animate(src, transform = transform_original)
-		sleep(10)
 	animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 	animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)

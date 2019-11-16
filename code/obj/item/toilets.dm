@@ -17,7 +17,6 @@ TOILET
 	rand_pos = 0
 
 /obj/item/storage/toilet/attackby(obj/item/W as obj, mob/user as mob)
-	timestop(user, 100, 2)//temp tester
 	if (src.contents.len >= 7)
 		boutput(user, "The toilet is clogged!")
 		return
