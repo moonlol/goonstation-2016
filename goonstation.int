@@ -1,12 +1,12 @@
 // BEGIN_INTERNALS
 /*
 MAP_ZOOM: 1.000
-LAST_COMPILE_TIME: 1573921856
-DIR: code code\atom code\procs 
+LAST_COMPILE_TIME: 1573922235
+DIR: code code\atom code\obj code\obj\item code\procs sound sound\vox 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 512.1472
-WINDOW: code\procs\timestop.dm;code\atom\throwing.dm
+WINDOW: code\procs\timestop.dm
 FILE: code\procs\timestop.dm
 */
 // END_INTERNALS

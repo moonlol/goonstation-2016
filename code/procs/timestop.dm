@@ -88,11 +88,7 @@ proc/timestop(setimmune, setduration, setsize)
 	if(!(A in decofrozen))
 		old_colors["\ref[A]"] = A.color
 		reversecolourin(A)
-		message_admins("[A] passed the thing")
-		frozen_things += A
-	else
-		message_admins("[A] failed the thing")
-		frozen_things += A
+	frozen_things += A
 	return
 
 
