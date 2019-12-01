@@ -2166,3 +2166,29 @@ var/global/night_mode_enabled = 0
 			logTheThing("admin", src, null, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]")
 			logTheThing("diary", src, null, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]", "admin")
 			message_admins("[key_name(src)] made a shitty piece of junk weapon:	 [O][src.mob ? " [log_loc(src.mob)]" : null]")
+
+/client/proc/cmd_givewedgie(var/mob/living)
+	set name = "give wedgie"
+	set desc = "destroy thine enemies underwear"
+	set category = "Special Verbs"
+	admin_only
+
+	if (src.holder.level >= LEVEL_PA)
+		var/mob/M = give_wedgie()
+		if (M)
+			logTheThing("admin", src, null, "gave a wedgie to [M]")
+
+/proc/give_wedgie(var/mob/living/H)
+	var/dir_offset = get_dir(src, H)
+	switch(dir_offset)
+		if (NORTH)
+			H.pixel_y = -24
+		if (SOUTH)
+			H.pixel_y = 24
+		if (EAST)
+			H.pixel_x = -24
+		if (WEST)
+			H.pixel_x = 24
+	sleep(40)
+	H.pixel_y = 0
+	H.pixel_x = 0
