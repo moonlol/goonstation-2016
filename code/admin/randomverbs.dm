@@ -2167,28 +2167,39 @@ var/global/night_mode_enabled = 0
 			logTheThing("diary", src, null, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]", "admin")
 			message_admins("[key_name(src)] made a shitty piece of junk weapon:	 [O][src.mob ? " [log_loc(src.mob)]" : null]")
 
-/client/proc/cmd_givewedgie(var/mob/living)
+/client/proc/cmd_givewedgie(var/mob/living/M)
 	set name = "give wedgie"
 	set desc = "destroy thine enemies underwear"
 	set category = "Special Verbs"
 	admin_only
 
+	var/announce = alert("announce this destruction of underwear to the server?", "announce", "Yes", "No")
+
 	if (src.holder.level >= LEVEL_PA)
-		var/mob/M = give_wedgie()
-		if (M)
-			logTheThing("admin", src, null, "gave a wedgie to [M]")
+		give_wedgie(M)
+		logTheThing("admin", src, null, "gave a wedgie to [M]")
+		message_admins("gave wedgie to [M]")
+
+	if (announce == "Yes")
+		command_alert("[M.name] has had their underwear completely destroyed by a massive wedgie at [get_area(M)]", "Pant destruction detected")
 
 /proc/give_wedgie(var/mob/living/H)
 	var/dir_offset = get_dir(src, H)
 	switch(dir_offset)
 		if (NORTH)
-			H.pixel_y = -24
+			H.pixel_y = -48
 		if (SOUTH)
-			H.pixel_y = 24
+			H.pixel_y = 48
 		if (EAST)
-			H.pixel_x = -24
+			H.pixel_x = -48
 		if (WEST)
-			H.pixel_x = 24
-	sleep(40)
-	H.pixel_y = 0
-	H.pixel_x = 0
+			H.pixel_x = 48
+	H.canmove = 0 //use fancy new status system for this thank
+	for (var/i = 0, i < 20, i++)
+		H.pixel_y += 1
+		sleep(0.1)
+	boutput(H, "<span style=\"color:red\">You feel a cosmic wedgie. Your pride, it's gone!. You turn around and yet see no one.")
+	spawn(100)
+		H.pixel_y = 0
+		H.pixel_x = 0
+		H.canmove = 1 //use fancy new status system for this thank
