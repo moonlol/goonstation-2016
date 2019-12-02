@@ -2168,7 +2168,7 @@ var/global/night_mode_enabled = 0
 			message_admins("[key_name(src)] made a shitty piece of junk weapon:	 [O][src.mob ? " [log_loc(src.mob)]" : null]")
 
 /client/proc/cmd_givewedgie(var/mob/living/M)
-	set name = "give wedgie"
+	set name = "Give wedgie"
 	set desc = "destroy thine enemies underwear"
 	set category = "Special Verbs"
 	admin_only
@@ -2181,7 +2181,7 @@ var/global/night_mode_enabled = 0
 		message_admins("gave wedgie to [M]")
 
 	if (announce == "Yes")
-		command_alert("[M.name] has had their underwear completely destroyed by a massive wedgie at [get_area(M)]", "Pant destruction detected")
+		command_alert("[M.name] has had their underwear completely destroyed by a massive wedgie at [get_area(M)]", "Pant destruction detected") // same as comment below about replacing
 
 /proc/give_wedgie(var/mob/living/H)
 	var/dir_offset = get_dir(src, H)
@@ -2198,7 +2198,7 @@ var/global/night_mode_enabled = 0
 	for (var/i = 0, i < 20, i++)
 		H.pixel_y += 1
 		sleep(0.1)
-	boutput(H, "<span style=\"color:red\">You feel a cosmic wedgie. Your pride, it's gone!. You turn around and yet see no one.")
+	boutput(H, "<span style=\"color:red\">You feel a cosmic wedgie. Your pride, it's gone!. You turn around and yet see no one.") //optionally replace this with something better (coders who merge this)
 	spawn(100)
 		H.pixel_y = 0
 		H.pixel_x = 0
