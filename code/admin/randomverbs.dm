@@ -2199,7 +2199,20 @@ var/global/night_mode_enabled = 0
 		H.pixel_y += 1
 		sleep(0.1)
 	boutput(H, "<span style=\"color:red\">You feel a cosmic wedgie. Your pride, it's gone!. You turn around and yet see no one.") //optionally replace this with something better (coders who merge this)
+	H.visible_message("<span style=\"color:red\"><B>[H]</B> gets one [pick("nasty", "wacky", "gnarly", "ominous", "sick", "sick-nasty")] wedgie!</span>")
 	spawn(100)
 		H.pixel_y = 0
 		H.pixel_x = 0
 		H.canmove = 1 //use fancy new status system for this thank
+
+
+/client/proc/cmd_givewedgieall()
+	set name = "Give wedgie all"
+	set desc = "Good lord please dont"
+	set category = "Special Verbs"
+	admin_only
+
+	if (src.holder.level >= LEVEL_PA)
+		command_alert("[src] has triggered a wave of wedgie energy. all crew are advised to remain vigilant and prepare for humilitation", "WARNING WARNING")
+		for(var/mob/living/M in world)
+			give_wedgie(M)

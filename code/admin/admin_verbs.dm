@@ -190,6 +190,7 @@ var/list/admin_verbs = list(
 /client/proc/admin_set_ai_vox,\
 /client/proc/cmd_makeshittyweapon,\
 /client/proc/cmd_givewedgie,\
+/client/proc/cmd_givewedgieall,\
 
 // moved up from admin
 /client/proc/cmd_admin_delete,\

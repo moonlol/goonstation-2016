@@ -1090,7 +1090,7 @@ var/zapLimiter = 0
 
 	if(stat & BROKEN)
 		return
-	if(!area)
+ 	if(!area) // run time fix please ignore
 		return
 	if(!area.requires_power)
 		return
