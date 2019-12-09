@@ -2708,8 +2708,8 @@ datum
 		anima_golemize
 			name = "anima_golem"
 			id = "anima_golem"
-			required_reagents = list("anima" = 5)
-			required_temperature = T0C + 100
+			required_reagents = list("anima" = 10)
+			required_temperature = 100 - T0C
 			instant = 1
 			mix_sound = 'sound/effects/ghostbreath.ogg'
 			mix_phrase = "<span style=\"color:red\">the solution begins violently bubbling!</span>"
