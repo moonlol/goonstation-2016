@@ -2713,8 +2713,10 @@ datum
 			instant = 1
 			mix_sound = 'sound/effects/ghostbreath.ogg'
 			mix_phrase = "<span style=\"color:red\">the solution begins violently bubbling!</span>"
+			var/static/reaction_count = 0
 
 			on_reaction(var/datum/reagents/holder)
+				fucking_critter_bullshit_fuckcrap_limiter(reaction_count)
 				var/my_atom = holder.my_atom
 				var/tomaster = usr
 				if(holder.total_volume)
