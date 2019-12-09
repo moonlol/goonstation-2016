@@ -565,6 +565,7 @@
 	brutevuln = 0.5
 	generic = 0
 	var/reagent_id = null
+	var/list/master = list()
 
 	New()
 		..()
@@ -596,6 +597,7 @@
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
 			if (iswizard(C)) continue //do not attack our master
+			if (C in master) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (istype(C, /mob/living/silicon/) && !src.atksilicon) continue

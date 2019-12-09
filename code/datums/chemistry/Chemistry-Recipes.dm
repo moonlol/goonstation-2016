@@ -2704,4 +2704,23 @@ datum
 			result_amount = 1
 			mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		anima_golemize
+			name = "anima_golem"
+			id = "anima_golem"
+			required_reagents = list("anima" = 5)
+			required_temperature = T0C + 100
+			instant = 1
+			mix_sound = 'sound/effects/ghostbreath.ogg'
+			mix_phrase = "<span style=\"color:red\">the solution begins violently bubbling!</span>"
+
+			on_reaction(var/datum/reagents/holder)
+				var/my_atom = holder.my_atom
+				var/tomaster = usr
+				if(holder.total_volume)
+					var/obj/critter/golem/TheGolem = new(get_turf(my_atom))
+					TheGolem.CustomizeGolem(holder)
+					TheGolem.master += tomaster
+					holder.clear_reagents()
+
 #undef get_fucked_clarks
