@@ -58,6 +58,8 @@
 	var/sound_snap = 'sound/effects/snap.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 
+	var/dabbing = FALSE
+
 #ifdef MAP_OVERRIDE_DESTINY
 	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
 #endif
@@ -1042,6 +1044,8 @@
 	return P
 
 /mob/living/Move(var/turf/NewLoc, direct)
+	if(dabbing) // nu-uh no moving while invis from dabbing
+		return
 	var/oldloc = loc
 	..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)

@@ -2058,6 +2058,9 @@
 				if (src.emote_check(voluntary, 50))
 					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Detective", "Vice Officer", "Regional Director", "Inspector")))
 						src.recite_miranda()
+			/*
+			ahaha, no. yer not getting the dab code from me buckaroo. - moonlol
+			*/
 			else
 				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
@@ -2075,6 +2078,48 @@
 			var/atom/A = src.loc
 			for (var/mob/O in A.contents)
 				O.show_message(message, m_type)
+
+
+proc/mob/living/carbon/human/dabbify()
+// why. why have you made me do this readster.
+	var/mob/living/carbon/human/O = usr
+	var/mob_overlays
+	mob_overlays = O.overlays
+	var/icon/V = new /icon('icons/mob/human.dmi', "body_m")
+	for(var/C in mob_overlays)
+		var/image/I = C
+		var/icon/II = icon(I.icon, I.icon_state)
+		if(I.color)
+			II.Blend(I.color, ICON_MULTIPLY)
+		V.Blend(II, ICON_OVERLAY)
+	var/image/L = image(V)
+	var/image/R = image(V)
+	var/image/T = image(V)
+	R.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
+	L.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
+	T.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
+
+	O.dabbing = TRUE
+	O.dir = SOUTH
+	sleep(0.1)
+	world << T
+	world << R
+	world << L
+	T.loc = get_turf(O)
+	R.loc = get_turf(O)
+	L.loc = get_turf(O)
+	O.alpha = 0
+	animate(L, transform = turn(L.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
+	animate(R, transform = turn(R.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
+	spawn(10)
+		animate(L, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		animate(R, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		spawn(5)
+			qdel(T)
+			qdel(R)
+			qdel(L)
+			O.alpha = 255
+			O.dabbing = FALSE
 
 /mob/living/carbon/human/get_desc()
 
@@ -2948,6 +2993,8 @@
 	if (istype(src.wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
+		return 1
+	if (dabbing) //dont fiddle with inventory while dabbing. balance as yer alpha is 0 for a bit. cant move though(not handled here)
 		return 1
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
 		return 1*/
