@@ -2083,42 +2083,36 @@
 proc/mob/living/carbon/human/dabbify()
 // why. why have you made me do this readster.
 	var/mob/living/carbon/human/O = usr
-	var/mob_overlays
-	mob_overlays = O.overlays
-	var/icon/V = new /icon('icons/mob/human.dmi', "body_m")
-	for(var/C in mob_overlays)
-		var/image/I = C
-		var/icon/II = icon(I.icon, I.icon_state)
-		if(I.color)
-			II.Blend(I.color, ICON_MULTIPLY)
-		V.Blend(II, ICON_OVERLAY)
-	var/image/L = image(V)
-	var/image/R = image(V)
-	var/image/T = image(V)
-	R.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
-	L.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
-	T.filters = filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
-
+	O.render_target = "\ref[O]"
+	var/image/left_arm = image(null)
+	left_arm.render_source = O.render_target
+	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
+	var/image/right_arm = image(null)
+	right_arm.render_source = O.render_target
+	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
+	var/image/torso = image(null)
+	torso.render_source = O.render_target
+	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	O.dabbing = TRUE
 	O.dir = SOUTH
-	sleep(0.1)
-	world << T
-	world << R
-	world << L
-	T.loc = get_turf(O)
-	R.loc = get_turf(O)
-	L.loc = get_turf(O)
-	O.alpha = 0
-	animate(L, transform = turn(L.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
-	animate(R, transform = turn(R.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
+	sleep(0.1) //so the direction setting actually takes place
+	world << torso
+	world << right_arm
+	world << left_arm
+	torso.loc = get_turf(O)
+	right_arm.loc = get_turf(O)
+	left_arm.loc = get_turf(O)
+	O.layer = LATTICE_LAYER  - 100000000000000000000000000000000000000 // FUCK LAYERS - moonlol
+	animate(left_arm, transform = turn(left_arm.transform, -110), pixel_y = 10, pixel_x = -1, 5, 1, CIRCULAR_EASING)
+	animate(right_arm, transform = turn(right_arm.transform, -95), pixel_y = 1, pixel_x = 10, 5, 1, CIRCULAR_EASING)
 	spawn(10)
-		animate(L, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
-		animate(R, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
+		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		spawn(5)
-			qdel(T)
-			qdel(R)
-			qdel(L)
-			O.alpha = 255
+			qdel(torso)
+			qdel(right_arm)
+			qdel(left_arm)
+			O.layer = MOB_LAYER
 			O.dabbing = FALSE
 
 /mob/living/carbon/human/get_desc()

@@ -180,6 +180,8 @@
 	var/punchMessage = "punches"
 	var/kickMessage = "kicks"
 
+	appearance_flags = KEEP_TOGETHER //needed for dabb
+
 #ifdef MAP_OVERRIDE_DESTINY
 	var/last_cryotron_message = 0 // to stop relaymove spam  :I
 #endif
