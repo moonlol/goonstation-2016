@@ -2379,6 +2379,8 @@ datum
 			var/atom/last_x
 			var/atom/last_y
 			var/atom/last_z
+			var/calcx
+			var/calcy
 			var/compression_factor = 3
 			var/pocket_dim_z = 3
 			var/pocket_xoffset = 0
@@ -2389,8 +2391,6 @@ datum
 			pooled()
 				..()
 				counter = 1
-				for(var/M in affected)
-					affected[M] = null
 
 			on_add()
 				var/atom/movable/A = holder.my_atom
@@ -2408,8 +2408,14 @@ datum
 					spawn(7)
 						last_x = A.x
 						last_y = A.y
+						calcx = last_x / compression_factor
+						calcy = last_y / compression_factor
+						if(calcx < 1)
+							calcx = 2
+						if(calcy < 1)
+							calcy = 2
 						affected["\ref[A]"] = A.z
-						A.set_loc(locate(last_x / compression_factor, last_y / compression_factor, pocket_dim_z))
+						A.set_loc(locate(calcx, calcy, pocket_dim_z))
 						animate(A, alpha = 255, time = 5, easing = LINEAR_EASING)
 						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 						A.visible_message("<span style=\"color:red\"><b>[A] appears in a burst of dark purple light!</b></span>")
@@ -2426,7 +2432,13 @@ datum
 					spawn(7)
 						last_x = A.x
 						last_y = A.y
-						A.set_loc(locate(last_x * compression_factor, last_y * compression_factor, affected[A]))
+						calcx = last_x * compression_factor
+						calcy = last_y * compression_factor
+						if(calcx < 1)
+							calcx = 2
+						if(calcy < 1)
+							calcy = 2
+						A.set_loc(locate(calcx, calcy, affected["\ref[A]"]))
 						affected["\ref[A]"] = null
 						last_y = null
 						last_z = null
@@ -2447,8 +2459,14 @@ datum
 					spawn(7)
 						last_x = O.x
 						last_y = O.y
-						affected[O] = O.z
-						O.set_loc(locate(last_x / compression_factor, last_y / compression_factor, pocket_dim_z))
+						affected["\ref[O]"] = O.z
+						calcx = last_x / compression_factor
+						calcy = last_y / compression_factor
+						if(calcx < 1)
+							calcx = 2
+						if(calcy < 1)
+							calcy = 2
+						O.set_loc(locate(calcx, calcy, pocket_dim_z))
 						animate(O, alpha = 255, time = 5, easing = LINEAR_EASING)
 						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 						O.visible_message("<span style=\"color:red\"><b>[O] appears in a burst of dark purple light!</b></span>")
@@ -2460,8 +2478,14 @@ datum
 					spawn(7)
 						last_x = O.x
 						last_y = O.y
-						O.set_loc(locate(last_x * compression_factor, last_y * compression_factor, affected[O]))
-						affected[O] = null
+						calcx = last_x * compression_factor
+						calcy = last_y * compression_factor
+						if(calcx < 1)
+							calcx = 2
+						if(calcy < 1)
+							calcy = 2
+						O.set_loc(locate(calcx, calcy, affected["\ref[O]"]))
+						affected["\ref[O]"] = null
 						last_y = null
 						last_z = null
 						animate(O, alpha = 255, time = 5, easing = LINEAR_EASING)

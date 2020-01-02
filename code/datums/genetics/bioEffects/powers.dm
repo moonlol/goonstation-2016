@@ -898,6 +898,8 @@
 	var/pocket_dim_z = 3
 	var/pocket_xoffset = 0
 	var/pocket_yoffset = 0
+	var/calcx = null
+	var/calcy = null
 
 /datum/targetable/geneticsAbility/dimension_shift
 	name = "Dimension Shift"
@@ -950,7 +952,13 @@
 							P.last_x = owner.x
 							P.last_y = owner.y
 							P.last_z = owner.z
-							M.set_loc(locate(P.last_x / P.compression_factor, P.last_y / P.compression_factor, P.pocket_dim_z))
+							P.calcx = P.last_x / P.compression_factor
+							P.calcy = P.last_y / P.compression_factor
+							if(P.calcx < 1)
+								P.calcx = 2
+							if(P.calcy < 1)
+								P.calcy = 2
+							M.set_loc(locate(P.calcx, P.calcy, P.pocket_dim_z))
 							animate(M, alpha = 255, time = 5, easing = LINEAR_EASING)
 							animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 							M.visible_message("<span style=\"color:red\"><b>[M] appears in a burst of blue light while being dragged by [owner]!</b></span>")
@@ -959,7 +967,13 @@
 					P.last_x = owner.x
 					P.last_y = owner.y
 					P.last_z = owner.z
-					owner.set_loc(locate(P.last_x / P.compression_factor, P.last_y / P.compression_factor, P.pocket_dim_z))
+					P.calcx = P.last_x / P.compression_factor
+					P.calcy = P.last_y / P.compression_factor
+					if(P.calcx < 1)
+						P.calcx = 2
+					if(P.calcy < 1)
+						P.calcy = 2
+					owner.set_loc(locate(P.calcx, P.calcy, P.pocket_dim_z))
 					animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 					animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 					owner.visible_message("<span style=\"color:red\"><b>[owner] appears in a burst of blue light!</b></span>")
@@ -980,7 +994,13 @@
 							animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 							P.last_x = owner.x
 							P.last_y = owner.y
-							M.set_loc(locate(P.last_x * P.compression_factor, P.last_y * P.compression_factor, P.last_z))
+							P.calcx = P.last_x * P.compression_factor
+							P.calcy = P.last_y * P.compression_factor
+							if(P.calcx < 1)
+								P.calcx = 2
+							if(P.calcy < 1)
+								P.calcy = 2
+							M.set_loc(locate(P.calcx, P.calcy, P.last_z))
 							M.visible_message("<span style=\"color:red\"><b>[M] appears in a burst of blue light while being dragged by [owner]!</b></span>")
 
 				owner.visible_message("<span style=\"color:red\"><b>[owner] vanishes in a burst of blue light!</b></span>")
@@ -990,7 +1010,13 @@
 				spawn(7)
 					P.last_x = owner.x
 					P.last_y = owner.y
-					owner.set_loc(locate(P.last_x * P.compression_factor, P.last_y * P.compression_factor, P.last_z))
+					P.calcx = P.last_x * P.compression_factor
+					P.calcy = P.last_y * P.compression_factor
+					if(P.calcx < 1)
+						P.calcx = 2
+					if(P.calcy < 1)
+						P.calcy = 2
+					owner.set_loc(locate(P.calcx, P.calcy, P.last_z))
 					P.last_x = null
 					P.last_y = null
 					P.last_z = null
