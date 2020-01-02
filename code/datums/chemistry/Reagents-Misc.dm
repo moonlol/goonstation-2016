@@ -2361,3 +2361,154 @@ datum
 				M.bioHolder.AddEffect("reversed_speech", timeleft = 180)
 				..(M)
 				return
+
+		khaoium
+//			name = "mc donalds sprite"
+			name = "Khaoium"
+//			id = "mc_donalds_sprite"
+			id = "khaoium"
+//			description = "It's sprite from mc donalds. It's unlike any sprite you have seen before. It seems quite potent"
+			description = "It's a dark purple shifting liquid, pulsing softly. Has been known to exhibit dimnesional transporting properties."
+			reagent_state = LIQUID
+			fluid_r = 128
+			fluid_g = 0
+			fluid_b = 128
+			transparency = 200
+			overdose = 20
+			depletion_rate = 0.4
+			var/atom/last_x
+			var/atom/last_y
+			var/atom/last_z
+			var/compression_factor = 3
+			var/pocket_dim_z = 3
+			var/pocket_xoffset = 0
+			var/pocket_yoffset = 0
+			var/static/affected = list()
+			var/counter = 1
+
+			pooled()
+				..()
+				counter = 1
+				for(var/M in affected)
+					affected[M] = null
+
+			on_add()
+				var/atom/movable/A = holder.my_atom
+				if (A.z == pocket_dim_z)
+					return
+				if (ismob(A))
+					if ((istype(A.loc,/area) && A.loc:teleport_blocked) || isrestrictedz(A.z))
+						boutput(A, "<span style=\"color:red\"><b>You seem to phase out of this dimension for a moment but suddenly snap back as if something is preventing you!</b></span>")
+						A.visible_message("<span style=\"color:red\"><b>Dark purple light fizzles around [A]!</b></span>")
+						return
+					A.visible_message("<span style=\"color:red\"><b>[A] vanishes in a burst of dark purple light!</b></span>")
+					playsound(A.loc, "sound/effects/ghost2.ogg", 50, 0)
+					animate(A, color = "#800080", time = 5, easing = LINEAR_EASING)
+					animate(alpha = 0, time = 5, easing = LINEAR_EASING)
+					spawn(7)
+						last_x = A.x
+						last_y = A.y
+						affected["\ref[A]"] = A.z
+						A.set_loc(locate(last_x / compression_factor, last_y / compression_factor, pocket_dim_z))
+						animate(A, alpha = 255, time = 5, easing = LINEAR_EASING)
+						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+						A.visible_message("<span style=\"color:red\"><b>[A] appears in a burst of dark purple light!</b></span>")
+
+			on_remove()
+				var/atom/movable/A = holder.my_atom
+				if (A.z != pocket_dim_z)
+					return
+				if (ismob(A))
+					A.visible_message("<span style=\"color:red\"><b>[A] vanishes in a burst of dark purple light!</b></span>")
+					playsound(A.loc, "sound/effects/ghost2.ogg", 50, 0)
+					animate(A, color = "#800080", time = 5, easing = LINEAR_EASING)
+					animate(alpha = 0, time = 5, easing = LINEAR_EASING)
+					spawn(7)
+						last_x = A.x
+						last_y = A.y
+						A.set_loc(locate(last_x * compression_factor, last_y * compression_factor, affected[A]))
+						affected["\ref[A]"] = null
+						last_y = null
+						last_z = null
+						animate(A, alpha = 255, time = 5, easing = LINEAR_EASING)
+						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+						A.visible_message("<span style=\"color:red\"><b>[A] appears  in a burst of dark purple light!</b></span>")
+
+			reaction_obj(var/obj/O, var/volume)
+				if (volume < 5 || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility) return
+				if(O.z != pocket_dim_z)
+					if ((istype(O.loc,/area) && O.loc:teleport_blocked) || isrestrictedz(O.z))
+						O.visible_message("<span style=\"color:red\"><b>Dark purple light fizzles around [O]!</b></span>")
+						return
+					O.visible_message("<span style=\"color:red\"><b>[O] vanishes in a burst of dark purple light!</b></span>")
+					playsound(O.loc, "sound/effects/ghost2.ogg", 50, 0)
+					animate(O, color = "#800080", time = 5, easing = LINEAR_EASING)
+					animate(alpha = 0, time = 5, easing = LINEAR_EASING)
+					spawn(7)
+						last_x = O.x
+						last_y = O.y
+						affected[O] = O.z
+						O.set_loc(locate(last_x / compression_factor, last_y / compression_factor, pocket_dim_z))
+						animate(O, alpha = 255, time = 5, easing = LINEAR_EASING)
+						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+						O.visible_message("<span style=\"color:red\"><b>[O] appears in a burst of dark purple light!</b></span>")
+				else
+					O.visible_message("<span style=\"color:red\"><b>[O] vanishes in a burst of dark purple light!</b></span>")
+					playsound(O.loc, "sound/effects/ghost2.ogg", 50, 0)
+					animate(O, color = "#800080", time = 5, easing = LINEAR_EASING)
+					animate(alpha = 0, time = 5, easing = LINEAR_EASING)
+					spawn(7)
+						last_x = O.x
+						last_y = O.y
+						O.set_loc(locate(last_x * compression_factor, last_y * compression_factor, affected[O]))
+						affected[O] = null
+						last_y = null
+						last_z = null
+						animate(O, alpha = 255, time = 5, easing = LINEAR_EASING)
+						animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+						O.visible_message("<span style=\"color:red\"><b>[O] appears  in a burst of dark purple light!</b></span>")
+
+			on_mob_life(var/mob/M)
+				if(!M)
+					M = holder.my_atom
+				if(prob(10))
+					M.take_toxin_damage(5)
+				..(M)
+
+
+			do_overdose(var/severity, var/mob/M)
+				var/effect = ..(severity, M)
+				if (severity == 1) //lesser
+					if(effect <= 1)
+						M.visible_message("<span style=\"color:red\">Multiple lacerations appear on <b>[M.name]</b>'s skin!</span>")
+						M.TakeDamage("all", 5, 0)
+						M.emote("scream")
+						M.updatehealth()
+					else if(effect <= 5)
+						boutput(M, "<span style=\"color:red\">You feel nauseous</span>")
+						M.change_misstep_chance(15)
+						M.make_dizzy(5)
+				else if (severity == 2) // greater
+					switch(counter++)
+						if(1 to 10)
+							M.change_eye_blurry(5, 5)
+							if (prob(20))
+								boutput(M, "<span style=\"color:red\">Something is wrong!</span>")
+						if(11 to 20)
+							M.change_eye_blurry(5, 5)
+							if (prob(20))
+								boutput(M, "<span style=\"color:red\">Something is <b>VERY VERY</b> wrong!</span>")
+							if (prob(8))
+								boutput(M, "<span style=\"color:red\"><b>You feel [pick("weak", "horribly weak", "numb", "like you can barely move", "tingly")].</b></span>")
+								M.stunned++
+						if(21 to INFINITY)
+							M.stunned = max(M.stunned, 30)
+							M.weakened = max(M.weakened, 3)
+							M.visible_message("<span style=\"color:red\"><b>[M] has a seizure!</b></span>")
+							M.make_jittery(1000)
+							if(prob(20))
+								boutput(M, "<span style=\"color:red\"><b>SOMETHING IS HORRIBLY WRONG!</b></span>")
+							if(prob(10))
+								boutput(M, "<span style=\"color:red\"><b>You lose your sense of feeling, this is it.</b></span>")
+								M.elecgib()
+								M.visible_message("<span style=\"color:red\"><b>[M]'s very molecular structure breaks apart!</b></span>")

@@ -929,6 +929,10 @@
 			if (owner.z != P.pocket_dim_z)
 				P.active = 0
 			if (!P.active)
+				if ((istype(owner.loc,/area) && owner.loc:teleport_blocked) || isrestrictedz(owner.z))
+					boutput(owner, "<span style=\"color:red\">That won't work here.</span>")
+					owner.visible_message("<span style=\"color:red\"><b>Blue light fizzles around [owner]!</b></span>")
+					return
 				P.active = 1
 				owner.visible_message("<span style=\"color:red\"><b>[owner] vanishes in a burst of blue light!</b></span>")
 				playsound(owner.loc, "sound/effects/ghost2.ogg", 50, 0)
@@ -946,9 +950,7 @@
 							P.last_x = owner.x
 							P.last_y = owner.y
 							P.last_z = owner.z
-							M.z = P.pocket_dim_z
-							M.x = P.last_x / P.compression_factor
-							M.y = P.last_y / P.compression_factor
+							M.set_loc(locate(P.last_x / P.compression_factor, P.last_y / P.compression_factor, P.pocket_dim_z))
 							animate(M, alpha = 255, time = 5, easing = LINEAR_EASING)
 							animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 							M.visible_message("<span style=\"color:red\"><b>[M] appears in a burst of blue light while being dragged by [owner]!</b></span>")
@@ -957,12 +959,7 @@
 					P.last_x = owner.x
 					P.last_y = owner.y
 					P.last_z = owner.z
-					owner.z = P.pocket_dim_z
-					owner.x = P.last_x / P.compression_factor
-					owner.y = P.last_y / P.compression_factor
-					message_admins("[owner.x] [owner]'s x")
-					message_admins("[owner.y] [owner]'s y")
-					message_admins("[owner.z] [owner]'s z")
+					owner.set_loc(locate(P.last_x / P.compression_factor, P.last_y / P.compression_factor, P.pocket_dim_z))
 					animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 					animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 					owner.visible_message("<span style=\"color:red\"><b>[owner] appears in a burst of blue light!</b></span>")
@@ -983,9 +980,7 @@
 							animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 							P.last_x = owner.x
 							P.last_y = owner.y
-							M.z = P.last_z
-							M.x = P.last_x * P.compression_factor
-							M.y = P.last_y * P.compression_factor
+							M.set_loc(locate(P.last_x * P.compression_factor, P.last_y * P.compression_factor, P.last_z))
 							M.visible_message("<span style=\"color:red\"><b>[M] appears in a burst of blue light while being dragged by [owner]!</b></span>")
 
 				owner.visible_message("<span style=\"color:red\"><b>[owner] vanishes in a burst of blue light!</b></span>")
@@ -995,9 +990,7 @@
 				spawn(7)
 					P.last_x = owner.x
 					P.last_y = owner.y
-					owner.z = P.last_z
-					owner.x = P.last_x * P.compression_factor
-					owner.y = P.last_y * P.compression_factor
+					owner.set_loc(locate(P.last_x * P.compression_factor, P.last_y * P.compression_factor, P.last_z))
 					P.last_x = null
 					P.last_y = null
 					P.last_z = null
