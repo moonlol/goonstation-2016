@@ -952,8 +952,8 @@
 							P.last_x = owner.x
 							P.last_y = owner.y
 							P.last_z = owner.z
-							P.calcx = P.last_x / P.compression_factor
-							P.calcy = P.last_y / P.compression_factor
+							P.calcx = (P.last_x / P.compression_factor) + P.pocket_xoffset
+							P.calcy = (P.last_y / P.compression_factor) + P.pocket_yoffset
 							if(P.calcx < 1)
 								P.calcx = 2
 							if(P.calcy < 1)
@@ -967,8 +967,8 @@
 					P.last_x = owner.x
 					P.last_y = owner.y
 					P.last_z = owner.z
-					P.calcx = P.last_x / P.compression_factor
-					P.calcy = P.last_y / P.compression_factor
+					P.calcx = (P.last_x / P.compression_factor) + P.pocket_xoffset
+					P.calcy = (P.last_y / P.compression_factor) + P.pocket_yoffset
 					if(P.calcx < 1)
 						P.calcx = 2
 					if(P.calcy < 1)
@@ -994,8 +994,8 @@
 							animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
 							P.last_x = owner.x
 							P.last_y = owner.y
-							P.calcx = P.last_x * P.compression_factor
-							P.calcy = P.last_y * P.compression_factor
+							P.calcx = (P.last_x * P.compression_factor) - P.pocket_xoffset
+							P.calcy = (P.last_y * P.compression_factor) - P.pocket_yoffset
 							if(P.calcx < 1)
 								P.calcx = 2
 							if(P.calcy < 1)
@@ -1010,8 +1010,8 @@
 				spawn(7)
 					P.last_x = owner.x
 					P.last_y = owner.y
-					P.calcx = P.last_x * P.compression_factor
-					P.calcy = P.last_y * P.compression_factor
+					P.calcx = (P.last_x * P.compression_factor) - P.pocket_xoffset
+					P.calcy = (P.last_y * P.compression_factor) - P.pocket_yoffset
 					if(P.calcx < 1)
 						P.calcx = 2
 					if(P.calcy < 1)

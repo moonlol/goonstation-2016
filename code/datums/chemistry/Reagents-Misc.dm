@@ -2408,8 +2408,8 @@ datum
 					spawn(7)
 						last_x = A.x
 						last_y = A.y
-						calcx = last_x / compression_factor
-						calcy = last_y / compression_factor
+						calcx = (last_x / compression_factor) + pocket_xoffset
+						calcy = (last_y / compression_factor) + pocket_yoffset
 						if(calcx < 1)
 							calcx = 2
 						if(calcy < 1)
@@ -2432,8 +2432,8 @@ datum
 					spawn(7)
 						last_x = A.x
 						last_y = A.y
-						calcx = last_x * compression_factor
-						calcy = last_y * compression_factor
+						calcx = (last_x * compression_factor) - pocket_xoffset
+						calcy = (last_y * compression_factor) - pocket_yoffset
 						if(calcx < 1)
 							calcx = 2
 						if(calcy < 1)
@@ -2460,8 +2460,8 @@ datum
 						last_x = O.x
 						last_y = O.y
 						affected["\ref[O]"] = O.z
-						calcx = last_x / compression_factor
-						calcy = last_y / compression_factor
+						calcx = (last_x / compression_factor) + pocket_xoffset
+						calcy = (last_y / compression_factor) + pocket_yoffset
 						if(calcx < 1)
 							calcx = 2
 						if(calcy < 1)
@@ -2478,8 +2478,8 @@ datum
 					spawn(7)
 						last_x = O.x
 						last_y = O.y
-						calcx = last_x * compression_factor
-						calcy = last_y * compression_factor
+						calcx = (last_x * compression_factor) - pocket_xoffset
+						calcy = (last_y * compression_factor) - pocket_yoffset
 						if(calcx < 1)
 							calcx = 2
 						if(calcy < 1)
