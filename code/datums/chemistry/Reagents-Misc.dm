@@ -2533,6 +2533,7 @@ datum
 							if(prob(20))
 								boutput(M, "<span style=\"color:red\"><b>SOMETHING IS HORRIBLY WRONG!</b></span>")
 							if(prob(10))
+								M.say("My final message. Change da world. Goodbye")
 								boutput(M, "<span style=\"color:red\"><b>You lose your sense of feeling, this is it.</b></span>")
 								M.elecgib()
-								M.visible_message("<span style=\"color:red\"><b>[M]'s very molecular structure breaks apart!</b></span>")
+								M.visible_message("<span style=\"color:red\"><b>[M]'s very molecular structure breaks apart! [pick("That's grody!", "HOLY SHIT!!!", "Gee i wonder how that happened!", "!!FUN!!")]</b></span>")
