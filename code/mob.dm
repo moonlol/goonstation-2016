@@ -180,6 +180,13 @@
 	var/punchMessage = "punches"
 	var/kickMessage = "kicks"
 
+	var/paused = FALSE
+	var/pausedbrute = 0
+	var/pausedburn = 0
+	var/pausedtox = 0
+	var/pausedoxy = 0
+	var/pausedbrain = 0
+
 #ifdef MAP_OVERRIDE_DESTINY
 	var/last_cryotron_message = 0 // to stop relaymove spam  :I
 #endif
@@ -783,6 +790,10 @@
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type)
 	hit_twitch()
+	if(src.paused)
+		src.pausedburn = max(0, src.pausedburn + burn)
+		src.pausedbrute = max(0, src.pausedbrute + brute)
+		return
 	src.health -= max(0, brute)
 	if (!is_heat_resistant())
 		src.health -= max(0, burn)

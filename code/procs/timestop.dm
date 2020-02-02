@@ -10,6 +10,7 @@
 	var/list/immune = list()
 	var/duration
 	var/size
+	var/freezeloop = FALSE
 	layer = LATTICE_LAYER
 	var/list/frozen_things = list()
 	var/list/frozen_turfs = list()
@@ -17,11 +18,12 @@
 	var/list/old_anchored = list()
 	var/list/smoltimefields = list()
 	var/list/decofrozen = list()
-	New(loc, immune, duration, size)
+	New(loc, immune, duration, size, freezeloop)
 		..(loc)
 		src.immune += immune // see below
 		src.duration = duration // see below
 		src.size = size //byond be like
+		src.freezeloop = freezeloop
 		for (var/turf/simulated/S in range(size, src))
 			freeze_turf(S)
 		for (var/atom/X in range(size, src))
@@ -53,8 +55,9 @@
 		..(crosser)
 		masterfield.freeze_atom(crosser)
 
-proc/timestop(setimmune, setduration, setsize)
-	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize)
+proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE)
+	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze)
+	message_admins("creation [loopfreeze]")
 	spawn(setduration)
 		qdel(newtimefield)
 
@@ -151,12 +154,24 @@ proc/timestop(setimmune, setduration, setsize)
 	L.ai_prefrozen = L.ai_active
 	L.ai_active = 0
 	L.paused = 1
-	mobs.Remove(L)
+	if(freezeloop)
+		mobs.Remove(L)
 
 /obj/effect/timefield/proc/unfreeze_mob(mob/living/L)
 	L.ai_active = L.ai_prefrozen
 	L.paused = 0
-	mobs.Add(L)
+	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT)
+	L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN)
+	L.take_toxin_damage(L.pausedtox)
+	L.take_brain_damage(L.pausedbrain)
+	L.take_oxygen_deprivation(L.pausedoxy)
+	L.pausedbrute = 0
+	L.pausedburn = 0
+	L.pausedtox = 0
+	L.pausedoxy = 0
+	L.pausedbrain = 0
+	if(freezeloop)
+		mobs.Add(L)
 
 /obj/effect/timefield/proc/freeze_critter(obj/critter/C)
 	C.paused = 1
@@ -165,10 +180,12 @@ proc/timestop(setimmune, setduration, setsize)
 	C.paused = 0
 
 /obj/effect/timefield/proc/freeze_machinery(obj/machinery/M)
-	machines.Remove(M)
+	if(freezeloop)
+		machines.Remove(M)
 
 /obj/effect/timefield/proc/unfreeze_machinery(obj/machinery/M)
-	machines.Add(M)
+	if(freezeloop)
+		machines.Add(M)
 
 /obj/effect/timefield/proc/freeze_deco(obj/O)
 	reversecolourin(O)

@@ -293,6 +293,9 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
+	if(paused)
+		src.pausedbrain = max(0,src.pausedbrain + amount)
+		return
 
 	src.brainloss = max(0,min(src.brainloss + amount,120))
 
@@ -311,6 +314,10 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
 		return
 
+	if(paused)
+		src.pausedtox = max(0,src.pausedtox + amount)
+		return
+
 	src.toxloss = max(0,src.toxloss + amount)
 	return
 
@@ -320,6 +327,9 @@
 
 	if (src.bioHolder && src.bioHolder.HasEffect("breathless"))
 		return
+
+	if(paused)
+		src.pausedoxy = max(0,src.pausedoxy + amount)
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

@@ -59,7 +59,6 @@
 	var/sound_snap = 'sound/effects/snap.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 
-	var/paused = FALSE
 
 #ifdef MAP_OVERRIDE_DESTINY
 	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
