@@ -16,7 +16,7 @@
 	var/list/old_anchored = list()
 	var/list/smoltimefields = list()
 	var/list/decofrozen = list()
-	New(loc, immune, duration, size, freezeloop, pausedamage)
+	New(loc, immune, duration, size, freezeloop)
 		..(loc)
 		src.immune += immune // see below
 		src.duration = duration // see below
