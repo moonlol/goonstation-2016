@@ -15,4 +15,4 @@
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if (do_mob(holder.owner, holder.owner, 20))
 			holder.owner.say("ZA WARUDO!")
-			timestop(holder.owner, 50, 4, FALSE, TRUE)// does NOT unsub from loops n such but does pause damage
+			timestop(holder.owner, 50, 4, FALSE)// does NOT unsub from loops n such

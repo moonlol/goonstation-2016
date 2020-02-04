@@ -9,7 +9,6 @@
 	var/duration
 	var/size
 	var/freezeloop = FALSE
-	var/pausedamage = FALSE
 	layer = LATTICE_LAYER
 	var/list/frozen_things = list()
 	var/list/frozen_turfs = list()
@@ -23,7 +22,6 @@
 		src.duration = duration // see below
 		src.size = size //byond be like
 		src.freezeloop = freezeloop
-		src.pausedamage = pausedamage
 		for (var/turf/simulated/S in range(size, src))
 			freeze_turf(S)
 		for (var/atom/X in range(size, src))
@@ -56,8 +54,8 @@
 		..(crosser)
 		masterfield.freeze_atom(crosser)
 //inorder to time stop simply insert the timestop proc anywhere look at code/datums/abilities/wizard/timestop.dm for an example of how this could be used
-proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE, var/pausedamage = FALSE) // loopfreeze controls whether or not loops are unsubbed to when pausing of a thing. it defaults to no(0/FALSE)
-	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze, pausedamage)
+proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfreeze controls whether or not loops are unsubbed to when pausing of a thing. it defaults to no(0/FALSE)
+	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze)
 	spawn(setduration)
 		qdel(newtimefield)
 
@@ -160,17 +158,16 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE, var/pause
 /obj/effect/timefield/proc/unfreeze_mob(mob/living/L)
 	L.ai_active = L.ai_prefrozen // makes sure the ai is the same as before
 	L.paused = 0
-	if(pausedamage)
-		L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT) // see below
-		L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN) // see below
-		L.take_toxin_damage(L.pausedtox) // see below
-		L.take_brain_damage(L.pausedbrain) // see below
-		L.take_oxygen_deprivation(L.pausedoxy) // see below
-		L.pausedbrute = 0 // see below
-		L.pausedburn = 0 // see below
-		L.pausedtox = 0 // see below
-		L.pausedoxy = 0 // see below
-		L.pausedbrain = 0 // needed for damage freezing
+	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT) // see below
+	L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN) // see below
+	L.take_toxin_damage(L.pausedtox) // see below
+	L.take_brain_damage(L.pausedbrain) // see below
+	L.take_oxygen_deprivation(L.pausedoxy) // see below
+	L.pausedbrute = 0 // see below
+	L.pausedburn = 0 // see below
+	L.pausedtox = 0 // see below
+	L.pausedoxy = 0 // see below
+	L.pausedbrain = 0 // needed for damage freezing
 	if(freezeloop)
 		mobs.Add(L)
 
