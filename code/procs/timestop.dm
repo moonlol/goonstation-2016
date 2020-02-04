@@ -5,8 +5,6 @@
 	anchored = 1
 	opacity = 0
 	alpha = 255
-	pixel_x = -256
-	pixel_y = -256
 	var/list/immune = list()
 	var/duration
 	var/size
@@ -51,13 +49,13 @@
 	New(var/loc, var/obj/effect/timefield/masterfield)
 		..(loc)
 		src.masterfield = masterfield
+
 	Crossed(var/atom/crosser as mob|obj)
 		..(crosser)
 		masterfield.freeze_atom(crosser)
-
-proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE)
+//inorder to time stop simply insert the timestop proc anywhere look at code/datums/abilities/wizard/timestop.dm for an example of how this could be used
+proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE) // loopfreeze controls whether or not loops are unsubbed to when pausing of a thing. it defaults to no(0/FALSE)
 	var/obj/effect/timefield/newtimefield = new(get_turf(usr), setimmune, setduration, setsize, loopfreeze)
-	message_admins("creation [loopfreeze]")
 	spawn(setduration)
 		qdel(newtimefield)
 
@@ -158,18 +156,18 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE)
 		mobs.Remove(L)
 
 /obj/effect/timefield/proc/unfreeze_mob(mob/living/L)
-	L.ai_active = L.ai_prefrozen
+	L.ai_active = L.ai_prefrozen // makes sure the ai is the same as before
 	L.paused = 0
-	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT)
-	L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN)
-	L.take_toxin_damage(L.pausedtox)
-	L.take_brain_damage(L.pausedbrain)
-	L.take_oxygen_deprivation(L.pausedoxy)
-	L.pausedbrute = 0
-	L.pausedburn = 0
-	L.pausedtox = 0
-	L.pausedoxy = 0
-	L.pausedbrain = 0
+	L.TakeDamage("chest", L.pausedbrute, 0, 0, DAMAGE_BLUNT) // see below
+	L.TakeDamage("chest", 0, L.pausedburn, 0, DAMAGE_BURN) // see below
+	L.take_toxin_damage(L.pausedtox) // see below
+	L.take_brain_damage(L.pausedbrain) // see below
+	L.take_oxygen_deprivation(L.pausedoxy) // see below
+	L.pausedbrute = 0 // see below
+	L.pausedburn = 0 // see below
+	L.pausedtox = 0 // see below
+	L.pausedoxy = 0 // see below
+	L.pausedbrain = 0 // needed for damage freezing
 	if(freezeloop)
 		mobs.Add(L)
 
@@ -193,13 +191,10 @@ proc/timestop(setimmune, setduration, setsize, var/loopfreeze = FALSE)
 /obj/effect/timefield/proc/unfreeze_deco(obj/O)
 	reversecolourout(O)
 
-/obj/effect/timefield/proc/reversecolourin(atom/A)
+/obj/effect/timefield/proc/reversecolourin(atom/A) // reverses colours
 	A.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
 
 /obj/effect/timefield/proc/reversecolourout(atom/A)
-	A.color = old_colors["\ref[A]"]
+	A.color = old_colors["\ref[A]"] //un reverses colours
 
 
-/*
-could've done a unsubscription from loops but no point as the effect is meant to be short
-*/

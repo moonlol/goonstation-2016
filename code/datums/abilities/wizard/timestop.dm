@@ -1,4 +1,4 @@
-/datum/targetable/spell/timestop
+/datum/targetable/spell/timestop // admin only spell example of how time stop could be used
 	name = "Timestop"
 	desc = "Za warudo."
 	icon_state = "phaseshift"
@@ -15,4 +15,4 @@
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if (do_mob(holder.owner, holder.owner, 20))
 			holder.owner.say("ZA WARUDO!")
-			timestop(holder.owner, 50, 4)
+			timestop(holder.owner, 50, 4)// does NOT unsub from loops n such
